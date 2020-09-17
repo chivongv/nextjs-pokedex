@@ -8,7 +8,6 @@ const Container = styled('div')(
     margin: 10,
     padding: 20,
     textAlign: 'center',
-    cursor: 'pointer',
   },
   ({ backgroundColor }: { backgroundColor?: string }) => ({
     backgroundColor: backgroundColor ? backgroundColor : '#eee',
@@ -71,26 +70,28 @@ export const PokemonCard = ({ pokemon, index }: Props) => {
   const id = '#' + index.toString().padStart(3, '0');
 
   return (
-    <Link href={`/pokemon/${index}`}>
-      <Container backgroundColor={backgroundColor}>
-        <ImageContainer>
-          <img
-            loading="lazy"
-            src={`https://pokeres.bastionbot.org/images/pokemon/${index}.png`}
-            alt={name}
-          />
-        </ImageContainer>
-        <Info>
-          <Number>{id}</Number>
-          <Name>{name}</Name>
-          <Type>
-            Type:
-            {pokemon.type.map((type, i) => (
-              <span key={i}>{toCapitalize(type)}</span>
-            ))}
-          </Type>
-        </Info>
-      </Container>
-    </Link>
+    <Container backgroundColor={backgroundColor}>
+      <Link href={`/pokemon/${index}`} passHref>
+        <a>
+          <ImageContainer>
+            <img
+              loading="lazy"
+              src={`https://pokeres.bastionbot.org/images/pokemon/${index}.png`}
+              alt={name}
+            />
+          </ImageContainer>
+        </a>
+      </Link>
+      <Info>
+        <Number>{id}</Number>
+        <Name>{name}</Name>
+        <Type>
+          Type:
+          {pokemon.type.map((type, i) => (
+            <span key={i}>{toCapitalize(type)}</span>
+          ))}
+        </Type>
+      </Info>
+    </Container>
   );
 };
