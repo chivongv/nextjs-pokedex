@@ -8,6 +8,7 @@ const Container = styled('div')(
     margin: 10,
     padding: 20,
     textAlign: 'center',
+    boxShadow: '0 3px 15px rgba(100, 100, 100, 0.4)',
   },
   ({ backgroundColor }: { backgroundColor?: string }) => ({
     backgroundColor: backgroundColor ? backgroundColor : '#eee',
