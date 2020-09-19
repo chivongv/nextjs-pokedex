@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 const Container = styled('div')({
   background: 'linear-gradient(to right, #d4d3dd, #efefbb)',
-  disolay: 'flex',
+  display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
+  paddingTop: 20,
+  minHeight: '100vh',
 });
 
 const InnerContainer = styled('div')({

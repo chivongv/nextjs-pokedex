@@ -15,7 +15,7 @@ const Container = styled('div')({
 const PageHeader = styled('h2')({
   fontSize: '2rem',
   textAlign: 'center',
-  margin: '1rem 0 0.5rem',
+  margin: '0.5rem 0',
 });
 
 const PokemonsContainer = styled('div')({

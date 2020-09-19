@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import { Colors } from '@/styles/colors';
+import { toCapitalize } from '@/utils/toCapitalize';
 
 const Container = styled('div')(
   {
@@ -63,8 +64,6 @@ type Props = {
   index: number;
 };
 
-const toCapitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
-
 export const PokemonCard = ({ pokemon, index }: Props) => {
   const name = toCapitalize(pokemon.name);
   const backgroundColor = Colors[pokemon.type[0]];
@@ -78,7 +77,6 @@ export const PokemonCard = ({ pokemon, index }: Props) => {
             <img
               loading="lazy"
               src={`https://pokeres.bastionbot.org/images/pokemon/${index}.png`}
-              alt={name}
             />
           </ImageContainer>
         </a>
