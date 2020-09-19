@@ -6,10 +6,13 @@ import { toCapitalize } from '@/utils/toCapitalize';
 const Container = styled('div')(
   {
     borderRadius: 20,
-    margin: 10,
+    margin: 5,
     padding: 20,
     textAlign: 'center',
     boxShadow: '0 3px 15px rgba(100, 100, 100, 0.4)',
+    '@media screen and (min-width: 500px)': {
+      margin: 10,
+    },
   },
   ({ backgroundColor }: { backgroundColor?: string }) => ({
     backgroundColor: backgroundColor ? backgroundColor : '#eee',
