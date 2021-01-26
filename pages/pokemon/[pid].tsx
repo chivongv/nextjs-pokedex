@@ -2,21 +2,22 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import ErrorPage from 'next/error';
 import styled from 'styled-components';
+
 import pokemons from '@/pokemons-data.json';
 import { Colors } from '@/styles/colors';
-import { Layout } from '@/components';
+import Layout from '@/components/Layout';
 import { toCapitalize } from '@/utils/toCapitalize';
 
 const Container = styled('div')(
   {
     borderRadius: 20,
-    margin: '0 auto 10px',
+    margin: '10px auto 5',
     padding: 20,
     width: 340,
     textAlign: 'center',
     boxShadow: '0 3px 15px rgba(100, 100, 100, 0.4)',
     '@media screen and (min-width: 500px)': {
-      marginBottom: 70,
+      marginBottom: 20,
     },
   },
   ({ backgroundColor }: { backgroundColor?: string }) => ({
@@ -66,6 +67,7 @@ const HomeLink = styled('a')({
   backgroundColor: '#eee',
   cursor: 'pointer',
   borderRadius: 5,
+  margin: '10px auto',
 });
 
 type Props = {
@@ -121,7 +123,7 @@ const PokemonDetails = ({ pokemon }: Props) => {
           </Info>
         </Container>
         <Center>
-          <Link href="/">
+          <Link href="/" passHref>
             <HomeLink>Back to home</HomeLink>
           </Link>
         </Center>

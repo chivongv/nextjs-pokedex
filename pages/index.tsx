@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import data from '../pokemons-data.json';
-import { Layout, PokemonCard } from '@/components';
+import Layout from '@/components/Layout';
+import PokemonCard from '@/components/PokemonCard';
+import SearchInput from '@/components/SearchInput';
 
 const Container = styled('div')({
   display: 'flex',
@@ -10,12 +13,6 @@ const Container = styled('div')({
   justifyContent: 'center',
   maxWidth: 1200,
   margin: '0 auto',
-});
-
-const PageHeader = styled('h2')({
-  fontSize: '2rem',
-  textAlign: 'center',
-  margin: '0.5rem 0',
 });
 
 const PokemonsContainer = styled('div')({
@@ -27,17 +24,45 @@ const PokemonsContainer = styled('div')({
 });
 
 const Home = () => {
+  const [searchText, setSearchText] = useState('');
+  // add pokedexNum to existing data
+  const modifiedData = data.kanto.map((pokemon, index) => ({
+    ...pokemon,
+    pokedexNum: index + 1,
+  }));
+  const filteredPokemons = modifiedData.filter((pokemon) => {
+    return (
+      pokemon.name.toLowerCase().includes(searchText) ||
+      pokemon.type.find((type) => type.toLowerCase().includes(searchText)) ||
+      `${pokemon.pokedexNum}` == searchText
+    );
+  });
+
   return (
     <div>
       <Layout title="Nextjs Pokedex">
         <Container>
-          <PageHeader>NextJS Pokedex</PageHeader>
+          <SearchInput
+            setSearchText={setSearchText}
+            placeholder="Search by name, type, number"
+          />
           <PokemonsContainer>
-            {data.kanto.map((pokemon, index) => {
-              return (
-                <PokemonCard key={index} pokemon={pokemon} index={index + 1} />
-              );
-            })}
+            {filteredPokemons.length > 0 ? (
+              filteredPokemons.map((pokemon, index) => {
+                const pokemonNum =
+                  data.kanto.findIndex((p) => p.name == pokemon.name) + 1;
+
+                return (
+                  <PokemonCard
+                    key={index}
+                    pokemon={pokemon}
+                    index={pokemonNum}
+                  />
+                );
+              })
+            ) : (
+              <h3>Pokemon can not be found. Please try another search term.</h3>
+            )}
           </PokemonsContainer>
         </Container>
       </Layout>

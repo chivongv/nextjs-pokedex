@@ -67,7 +67,7 @@ type Props = {
   index: number;
 };
 
-export const PokemonCard = ({ pokemon, index }: Props) => {
+const PokemonCard = ({ pokemon, index }: Props) => {
   const name = toCapitalize(pokemon.name);
   const backgroundColor = Colors[pokemon.type[0]];
   const id = '#' + index.toString().padStart(3, '0');
@@ -97,3 +97,5 @@ export const PokemonCard = ({ pokemon, index }: Props) => {
     </Container>
   );
 };
+
+export default PokemonCard
