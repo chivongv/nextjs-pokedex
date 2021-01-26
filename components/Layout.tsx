@@ -50,6 +50,7 @@ const Layout: FC<Props> = ({ title, children }) => {
       </Head>
       <ContentWrapper>
         <GithubCorner
+          href="https://github.com/chivongv/nextjs-pokedex"
           bannerColor="#b7a98e"
           octoColor="rgba(255, 255, 255, 0.6)"
         />
