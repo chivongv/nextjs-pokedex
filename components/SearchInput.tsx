@@ -4,7 +4,6 @@ import { FaSearch } from 'react-icons/fa';
 const Container = styled.div({
   display: 'flex',
   justifyContent: 'center',
-  //   alignSelf: 'center',
   background: 'rgba(0,0,0,0.1)',
   borderRadius: 8,
   width: '100%',

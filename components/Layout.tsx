@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import Link from 'next/link';
+import GithubCorner from 'react-github-corner';
 
 const Container = styled('div')({
   background: 'linear-gradient(to right, #d4d3dd, #efefbb)',
@@ -48,6 +49,10 @@ const Layout: FC<Props> = ({ title, children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ContentWrapper>
+        <GithubCorner
+          bannerColor="#b7a98e"
+          octoColor="rgba(255, 255, 255, 0.6)"
+        />
         <Link href="/" passHref>
           <PageHeader>NextJS Pokedex</PageHeader>
         </Link>
