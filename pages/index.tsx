@@ -31,10 +31,12 @@ const Home = () => {
     pokedexNum: index + 1,
   }));
   const filteredPokemons = modifiedData.filter((pokemon) => {
+    const keyword = searchText.toLowerCase();
+
     return (
-      pokemon.name.toLowerCase().includes(searchText) ||
-      pokemon.type.find((type) => type.toLowerCase().includes(searchText)) ||
-      `${pokemon.pokedexNum}` == searchText
+      pokemon.name.toLowerCase().includes(keyword) ||
+      pokemon.type.find((type) => type.toLowerCase().includes(keyword)) ||
+      `${pokemon.pokedexNum}`.includes(keyword)
     );
   });
 
