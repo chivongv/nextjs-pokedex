@@ -17,6 +17,7 @@ const SearchIcon = styled(FaSearch)({
   top: '50%',
   left: 18,
   transform: 'translate(-50%, -50%)',
+  color: 'rgba(0,0,0,0.5)',
 });
 
 const Input = styled.input({
@@ -26,6 +27,9 @@ const Input = styled.input({
   height: '100%',
   padding: 16,
   paddingLeft: 34,
+  '::placeholder': {
+    fontSize: '0.875rem',
+  },
 });
 
 const SearchInput = ({ setSearchText, ...rest }) => {
