@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import data from '../pokemons-data.json';
+import data from '@/pokemons-data.json';
 import Layout from '@/components/Layout';
 import PokemonCard from '@/components/PokemonCard';
 import SearchInput from '@/components/SearchInput';
@@ -46,7 +46,10 @@ const Home = () => {
         <Container>
           <SearchInput
             setSearchText={setSearchText}
+            id="search"
+            name="search"
             placeholder="Search by name, type, number"
+            aria-label="Search pokemon by name, type, number"
           />
           <PokemonsContainer>
             {filteredPokemons.length > 0 ? (

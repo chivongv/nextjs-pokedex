@@ -73,9 +73,9 @@ const PokemonCard = ({ pokemon, index }: Props) => {
   const id = '#' + index.toString().padStart(3, '0');
 
   return (
-    <Container backgroundColor={backgroundColor}>
+    <Container backgroundColor={backgroundColor} aria-label={`Pokemon ${name}`}>
       <Link href={`/pokemon/${index}`} passHref>
-        <a>
+        <a aria-label={`Read more about ${name} here`}>
           <ImageContainer>
             <img
               loading="lazy"
@@ -98,4 +98,4 @@ const PokemonCard = ({ pokemon, index }: Props) => {
   );
 };
 
-export default PokemonCard
+export default PokemonCard;

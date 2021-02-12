@@ -41,7 +41,7 @@ const SearchInput = ({ setSearchText, ...rest }) => {
   return (
     <Container>
       <SearchIcon />
-      <Input {...rest} onChange={handleChange} />
+      <Input type="text" {...rest} onChange={handleChange} />
     </Container>
   );
 };
