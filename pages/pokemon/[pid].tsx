@@ -62,7 +62,7 @@ const Center = styled('div')({
   justifyContent: 'center',
 });
 
-const HomeLink = styled('a')({
+const ButtonLink = styled('a')({
   padding: '10px 15px',
   backgroundColor: '#eee',
   cursor: 'pointer',
@@ -76,7 +76,24 @@ type Props = {
 
 const PokemonDetails = ({ pokemon }: Props) => {
   if (!pokemon) {
-    return <ErrorPage statusCode={404}></ErrorPage>;
+    return (
+      <Layout title="Error">
+        <Container>
+          <div>
+            Error on fetching the pokemon. Please try again or return to
+            homepage.
+          </div>
+        </Container>
+        <Center>
+          <ButtonLink onClick={() => window.location.reload()}>
+            Try again
+          </ButtonLink>
+          <Link href="/" passHref>
+            <ButtonLink>Back to home</ButtonLink>
+          </Link>
+        </Center>
+      </Layout>
+    );
   }
 
   const backgroundColor = Colors[pokemon.types[0].type.name];
@@ -124,7 +141,7 @@ const PokemonDetails = ({ pokemon }: Props) => {
         </Container>
         <Center>
           <Link href="/" passHref>
-            <HomeLink>Back to home</HomeLink>
+            <ButtonLink>Back to home</ButtonLink>
           </Link>
         </Center>
       </Layout>

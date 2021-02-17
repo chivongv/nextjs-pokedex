@@ -61,10 +61,7 @@ const Layout: FC<Props> = ({ title, children }) => {
       </ContentWrapper>
       <Footer>
         © {new Date().getFullYear() + ' '}
-        <a href="https://codepen.io/FlorinPop17/pen/gOYZxyE">
-          Design inspiration by Florin Pop
-        </a>
-        , built with NextJS by{' '}
+        Built with NextJS by{' '}
         <a
           href="https://chivongv.se/"
           target="_blank"
