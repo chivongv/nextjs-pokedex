@@ -1,12 +1,13 @@
-import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import ErrorPage from 'next/error';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import useSWR from 'swr';
 
 import pokemons from '@/pokemons-data.json';
 import { Colors } from '@/styles/colors';
 import Layout from '@/components/Layout';
 import { toCapitalize } from '@/utils/toCapitalize';
+import Loader from '@/components/Loader';
 
 const Container = styled('div')(
   {
@@ -70,19 +71,40 @@ const ButtonLink = styled('a')({
   margin: '10px auto',
 });
 
-type Props = {
-  pokemon: any;
-};
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
-const PokemonDetails = ({ pokemon }: Props) => {
-  if (!pokemon) {
+const PokemonDetails = () => {
+  const router = useRouter();
+  const { pid } = router.query;
+  const nameIndex = pid
+    ? pokemons.kanto.findIndex((item) => item.name === pid) + 1
+    : undefined;
+  const id = pid ? parseInt(pid.toString()) : undefined;
+  const fetchId = id ? id : nameIndex;
+  const notValidPokemonId = !id || id === NaN || id < 1 || id > 151;
+  const notValidPokemonName = nameIndex === undefined || nameIndex < 1;
+  const { data, error } = useSWR(
+    `https://pokeapi.co/api/v2/pokemon/${fetchId}`,
+    fetcher,
+    { refreshInterval: 0 },
+  );
+
+  if ((notValidPokemonId && notValidPokemonName) || error) {
     return (
       <Layout title="Error">
         <Container>
-          <div>
-            Error on fetching the pokemon. Please try again or return to
-            homepage.
-          </div>
+          {notValidPokemonId && notValidPokemonName && (
+            <div>
+              Invalid pokemon id or name. Please try again or return to
+              homepage.
+            </div>
+          )}
+          {error && (
+            <div>
+              Error on fetching the pokemon. Please try again or return to
+              homepage.
+            </div>
+          )}
         </Container>
         <Center>
           <ButtonLink onClick={() => window.location.reload()}>
@@ -96,46 +118,47 @@ const PokemonDetails = ({ pokemon }: Props) => {
     );
   }
 
-  const backgroundColor = Colors[pokemon.types[0].type.name];
+  if (!data) return <Loader />;
+
+  const backgroundColor = Colors[data.types[0].type.name];
 
   return (
     <div>
-      <Layout title={toCapitalize(pokemon.name)}>
+      <Layout title={toCapitalize(data.name)}>
         <Container backgroundColor={backgroundColor}>
           <div>
-            <Name>{toCapitalize(pokemon.name)}</Name>
+            <Name>{toCapitalize(data.name)}</Name>
             <ImageContainer>
               <img
                 loading="lazy"
-                src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                src={`https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`}
               />
             </ImageContainer>
-            <Number>{'#' + pokemon.id.toString().padStart(3, '0')}</Number>
+            <Number>{'#' + data.id.toString().padStart(3, '0')}</Number>
           </div>
           <Info>
-            <div>{'Height: ' + pokemon.height * 10 + ' cm'}</div>
-            <div>{'Weight: ' + pokemon.weight / 10 + ' kg'}</div>
+            <div>{'Height: ' + data.height * 10 + ' cm'}</div>
+            <div>{'Weight: ' + data.weight / 10 + ' kg'}</div>
             <div>
-              {'Types: ' +
-                pokemon.types.map((item) => item.type.name).join(' | ')}
+              {'Types: ' + data.types.map((item) => item.type.name).join(' | ')}
             </div>
-            <div>{`${pokemon.stats[0].stat.name.toUpperCase()}: ${
-              pokemon.stats[0].base_stat
+            <div>{`${data.stats[0].stat.name.toUpperCase()}: ${
+              data.stats[0].base_stat
             }`}</div>
-            <div>{`${toCapitalize(pokemon.stats[1].stat.name)}: ${
-              pokemon.stats[1].base_stat
+            <div>{`${toCapitalize(data.stats[1].stat.name)}: ${
+              data.stats[1].base_stat
             }`}</div>
-            <div>{`${toCapitalize(pokemon.stats[2].stat.name)}: ${
-              pokemon.stats[2].base_stat
+            <div>{`${toCapitalize(data.stats[2].stat.name)}: ${
+              data.stats[2].base_stat
             }`}</div>
             <div>{`${toCapitalize(
-              pokemon.stats[3].stat.name.replace('-', ' '),
-            )}: ${pokemon.stats[3].base_stat}`}</div>
+              data.stats[3].stat.name.replace('-', ' '),
+            )}: ${data.stats[3].base_stat}`}</div>
             <div>{`${toCapitalize(
-              pokemon.stats[4].stat.name.replace('-', ' '),
-            )}: ${pokemon.stats[4].base_stat}`}</div>
-            <div>{`${toCapitalize(pokemon.stats[5].stat.name)}: ${
-              pokemon.stats[5].base_stat
+              data.stats[4].stat.name.replace('-', ' '),
+            )}: ${data.stats[4].base_stat}`}</div>
+            <div>{`${toCapitalize(data.stats[5].stat.name)}: ${
+              data.stats[5].base_stat
             }`}</div>
           </Info>
         </Container>
@@ -147,29 +170,6 @@ const PokemonDetails = ({ pokemon }: Props) => {
       </Layout>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const pid = context.params.pid;
-  const id = pid ? parseInt(pid.toString()) : undefined;
-  const nameIndex = pid
-    ? pokemons.kanto.findIndex((item) => item.name === pid) + 1
-    : undefined;
-  const notValidPokemonId = !id || id === NaN || id < 1 || id > 151;
-  const notValidPokemonName = nameIndex === undefined || nameIndex < 1;
-
-  if (notValidPokemonId && notValidPokemonName) {
-    return {
-      props: { pokemon: null },
-    };
-  }
-  const fetchId = id ? id : nameIndex;
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${fetchId}`);
-  const pokemon = await res.json();
-
-  return {
-    props: { pokemon },
-  };
 };
 
 export default PokemonDetails;
