@@ -63,22 +63,30 @@ const Pokeball = styled.div`
   position: relative;
   transform-origin: bottom center;
   animation: ${bounce} 2s ease-in-out infinite;
+  border: 2px solid rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(244, 0, 31, 1) 0%,
+    rgba(255, 0, 0, 1) 47.5%,
+    rgba(0, 0, 0, 0.7) 47.5%,
+    rgba(0, 0, 0, 0.7) 52.5%,
+    white 52.5%,
+    white 100%
+  );
 
   &::after {
     content: '';
-    height: 100%;
-    width: 100%;
+    width: 150px;
+    height: 150px;
     position: absolute;
-    border: 2px solid black;
+    top: -45px;
+    left: -35px;
     border-radius: 50%;
-    background: linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 254, 254, 1) 49.5%,
-      rgba(0, 0, 0, 1) 49.5%,
-      rgba(0, 0, 0, 1) 52%,
-      rgba(244, 0, 31, 1) 52%,
-      rgba(255, 0, 0, 1) 100%
+    background: radial-gradient(
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0) 50%
     );
   }
 
@@ -87,8 +95,9 @@ const Pokeball = styled.div`
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    box-shadow: 2px 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 5px #fff, 0 0 0 8px #000;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 5px #fff,
+      0 0 0 10px rgba(0, 0, 0, 0.7);
     background: #fff;
     position: absolute;
     left: 50%;
