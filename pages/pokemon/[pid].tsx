@@ -2,12 +2,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import useSWR from 'swr';
+import Image from 'next/image';
 
 import pokemons from '@/pokemons-data.json';
 import { Colors } from '@/styles/colors';
 import Layout from '@/components/Layout';
 import { toCapitalize } from '@/utils/toCapitalize';
-import Loader from '@/components/Loader';
+import Loader, { LoaderContainer } from '@/components/Loader';
 
 const Container = styled('div')(
   {
@@ -118,7 +119,21 @@ const PokemonDetails = () => {
     );
   }
 
-  if (!data) return <Loader />;
+  if (!data)
+    return (
+      <div>
+        <Layout title="Loading">
+          <LoaderContainer aria-label="Loading pokemon...">
+            <Loader />
+          </LoaderContainer>
+          <Center>
+            <Link href="/" passHref>
+              <ButtonLink>Back to home</ButtonLink>
+            </Link>
+          </Center>
+        </Layout>
+      </div>
+    );
 
   const backgroundColor = Colors[data.types[0].type.name];
 
@@ -129,9 +144,11 @@ const PokemonDetails = () => {
           <div>
             <Name>{toCapitalize(data.name)}</Name>
             <ImageContainer>
-              <img
-                loading="lazy"
+              <Image
                 src={`https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`}
+                layout="fixed"
+                width={240}
+                height={240}
               />
             </ImageContainer>
             <Number>{'#' + data.id.toString().padStart(3, '0')}</Number>

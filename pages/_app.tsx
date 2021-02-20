@@ -1,7 +1,8 @@
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import '@/styles/global.css';
-import Loader from '@/components/Loader';
+import Layout from '@/components/Layout';
+import Loader, { LoaderContainer } from '@/components/Loader';
 
 const MyApp = ({ Component, pageProps }) => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,21 @@ const MyApp = ({ Component, pageProps }) => {
     };
   }, []);
 
-  return <>{loading ? <Loader /> : <Component {...pageProps} />}</>;
+  return (
+    <>
+      {loading ? (
+        <div>
+          <Layout title="Loading">
+            <LoaderContainer aria-label="Loading...">
+              <Loader />
+            </LoaderContainer>
+          </Layout>
+        </div>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </>
+  );
 };
 
 export default MyApp;
