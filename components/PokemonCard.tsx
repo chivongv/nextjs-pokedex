@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Colors } from '@/styles/colors';
 import { toCapitalize } from '@/utils/toCapitalize';
 
@@ -25,9 +26,10 @@ const ImageContainer = styled('div')({
   width: 120,
   height: 120,
   textAlign: 'center',
-  '> img': {
+  '> div': {
     marginTop: 20,
     maxWidth: '90%',
+    maxHeight: '90%',
   },
 });
 
@@ -77,10 +79,15 @@ const PokemonCard = ({ pokemon, index }: Props) => {
       <Link href={`/pokemon/${index}`} passHref>
         <a aria-label={`Read more about ${name} here`}>
           <ImageContainer>
-            <img
-              loading="lazy"
-              src={`https://pokeres.bastionbot.org/images/pokemon/${index}.png`}
-            />
+            <div>
+              <Image
+                src={`https://pokeres.bastionbot.org/images/pokemon/${index}.png`}
+                alt={`Picture of ${name}`}
+                layout="intrinsic"
+                width={120}
+                height={120}
+              />
+            </div>
           </ImageContainer>
         </a>
       </Link>
