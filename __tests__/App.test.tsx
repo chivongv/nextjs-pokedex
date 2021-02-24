@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 // import { server } from '../__mocks__/server';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
 import Index from '../pages/index';
 
 // beforeAll(() => server.listen());

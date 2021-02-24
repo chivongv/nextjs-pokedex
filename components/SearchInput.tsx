@@ -41,7 +41,7 @@ const SearchInput = ({ setSearchText, ...rest }) => {
   return (
     <Container>
       <SearchIcon />
-      <Input type="text" {...rest} onChange={handleChange} />
+      <Input type="text" {...rest} onKeyUp={handleChange} />
     </Container>
   );
 };
